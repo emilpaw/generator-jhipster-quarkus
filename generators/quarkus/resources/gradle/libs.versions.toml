@@ -29,7 +29,7 @@ gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version = 
 gradle-node = { id = "com.github.node-gradle.node", version = "7.0.2" }
 liquibase = { id = "org.liquibase.gradle", version = "2.2.0" }
 sonarqube = { id = "org.sonarqube", version = "4.3.0.3225" }
-openapi-generator = { id = "org.openapi.generator", version = "4.2.3" }
+openapi-generator = { id = "org.openapi.generator", version = "7.7.0" }
 checkstyle = { id = "org.checkstyle", version = "10.17.0" }
 no-http-checkstyle = { id = "io.github.checkstyle.checkstyle", version = "0.0.11" }
 modernizer = { id = "org.gaul.modernizer", version = "1.8.0" }
