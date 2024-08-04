@@ -8,7 +8,7 @@ camel-quarkus-jackson = { group = "org.apache.camel.quarkus", name = "camel-quar
 
 # Remove from build
 commons-vfs2 = { group = "org.apache.commons", name = "commons-vfs2", version = "2.9.0" }
-graal = { group = "org.graalvm.nativeimage", name = "svm", version = "23.1.2" }
+graal = { group = "org.graalvm.nativeimage", name = "svm", version = "24.0.2" }
 mapstruct = { group = "org.mapstruct", name = "mapstruct", version = "1.5.5.Final" }
 mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version = "1.5.5.Final" }
 
