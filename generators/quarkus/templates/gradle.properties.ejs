@@ -27,8 +27,12 @@ node_version=<%= nodeVersion %>
 npm_version=<%= nodeDependencies.npm %>
 
 # Dependency versions
+# TODO: not sure if Mapstruct & Archunit should be here.
+# It is defined here in the classic JHipster and Micronaut
 mapstruct_version=1.5.5.Final
 archunit_junit5_version=1.2.1
+
+
 resteasy_problem_version=3.9.0
 assertj_version=3.26.0
 <%_ if (searchEngine === 'elasticsearch') { _%>
@@ -40,14 +44,8 @@ jackson_databind_nullable_version=<%= JACKSON_DATABIND_NULLABLE_VERSION %>
 <%_ if (databaseType === 'sql') { _%>
 liquibaseTaskPrefix=liquibase
 <%_ } _%>
-<%_ if (cacheProvider === 'redis') { _%>
-camel_quarkus_jackson_version=3.11.0
-<%_ } _%>
-<%_ if (databaseType === 'mongodb') { _%>
-mongockBom_version=4.3.8
-commons_vfs2_version=2.9.0
-graal_version=23.1.2
-<%_ } _%>
+
+# TODO: figure out which plugins should be defined here
 
 # gradle plugin version
 git_properties_plugin_version=2.4.1
