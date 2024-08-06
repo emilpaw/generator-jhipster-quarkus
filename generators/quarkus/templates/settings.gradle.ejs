@@ -23,19 +23,8 @@ pluginManagement {
           gradlePluginPortal()
      }
      plugins {
-          id 'com.gorylenko.gradle-git-properties' version "${git_properties_plugin_version}"
-          <%_ if (enableSwaggerCodegen) { _%>
-          id "org.openapi.generator" version "${openapi_plugin_version}"
-          <%_ } _%>
-          <%_ if (!skipClient) { _%>
-          id 'com.github.node-gradle.node' version "${gradle_node_plugin_version}"
-          <%_ } _%>
-          <%_ if (databaseType === 'sql') { _%>
-          id 'org.liquibase.gradle' version "${liquibase_plugin_version}"
-          <%_ } _%>
-          id 'org.sonarqube' version "${sonarqube_plugin_version}"
-          id "io.spring.nohttp" version "${no_http_checkstyle_version}"
-          id 'com.github.andygoossens.gradle-modernizer-plugin' version "${modernizer_plugin_version}"
+          // TODO: Not what is to be added here vs build.gradle
+          // in classic JHipster at least gradle-git-properties is defined here
           id 'io.quarkus' version "${quarkusPluginVersion}"
      }
 }

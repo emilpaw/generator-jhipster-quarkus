@@ -21,6 +21,10 @@ export default class extends BaseApplicationGenerator {
         await this.dependsOnJHipster(GENERATOR_BOOTSTRAP_APPLICATION);
         (await this.dependsOnJHipster(GENERATOR_JAVA)).generateEntities = false;
         await this.dependsOnJHipster(GENERATOR_SERVER);
+
+        // TODO: this is needed for addJavaDefinition to work
+        // How could I have known that?
+        await this.dependsOnJHipster('jhipster:java:build-tool');
     }
 
     get [BaseApplicationGenerator.INITIALIZING]() {
@@ -74,6 +78,9 @@ export default class extends BaseApplicationGenerator {
 
     get [BaseApplicationGenerator.LOADING]() {
         return this.asLoadingTaskGroup({
+            async loadCatalog({ application }) {
+                this.loadJavaDependenciesFromGradleCatalog(application.javaDependencies);
+            },
             async loadCommand({ application }) {
                 await this.loadCurrentJHipsterCommandConfig(application);
             },
@@ -167,6 +174,85 @@ export default class extends BaseApplicationGenerator {
 
     get [BaseApplicationGenerator.POST_WRITING]() {
         return this.asPostWritingTaskGroup({
+            addDependencies({ application, source }) {
+                const { javaDependencies } = application;
+                source.addJavaDefinition({
+                    dependencies: [
+                        { groupId: 'org.assertj', artifactId: 'assertj-core', version: javaDependencies['assertj-core'] },
+                        {
+                            groupId: 'com.tngtech.archunit',
+                            artifactId: 'archunit-junit5-api',
+                            version: javaDependencies['archunit-junit5-api'],
+                        },
+                        {
+                            groupId: 'org.apache.camel.quarkus',
+                            artifactId: 'camel-quarkus-jackson',
+                            version: javaDependencies['camel-quarkus-jackson'],
+                        },
+                        { groupId: 'org.apache.commons', artifactId: 'commons-vfs2', version: javaDependencies['commons-vfs2'] },
+                        { groupId: 'org.graalvm.nativeimage', artifactId: 'svm', version: javaDependencies['graal'] },
+                        { groupId: 'org.mapstruct', artifactId: 'mapstruct', version: javaDependencies['mapstruct'] },
+                        { groupId: 'org.mapstruct', artifactId: 'mapstruct-processor', version: javaDependencies['mapstruct-processor'] },
+                        { groupId: 'com.github.cloudyrock.mongock', artifactId: 'mongock-bom', version: javaDependencies['mongock-bom'] },
+                        {
+                            groupId: 'com.tietoevry.quarkus',
+                            artifactId: 'quarkus-resteasy-problem',
+                            version: javaDependencies['quarkus-resteasy-problem'],
+                        },
+                        { groupId: 'com.github.tomakehurst', artifactId: 'wiremock-jre8', version: javaDependencies['wiremock'] },
+                        {
+                            groupId: 'com.github.dasniko',
+                            artifactId: 'testcontainers-keycloak',
+                            version: javaDependencies['testcontainers-keycloak'],
+                        },
+                    ],
+                });
+
+                source.addGradleDependencyCatalogPlugins([
+                    {
+                        id: 'com.gorylenko.gradle-git-properties',
+                        pluginName: 'gradle-git-properties',
+                        version: application.javaDependencies['gradle-git-properties'],
+                        addToBuild: true,
+                    },
+                    {
+                        id: 'org.openapi.generator',
+                        pluginName: 'openapi-generator',
+                        version: application.javaDependencies['openapi-generator'],
+                        addToBuild: application.enableSwaggerCodegen,
+                    },
+                    {
+                        id: 'com.github.node-gradle.node',
+                        pluginName: 'node',
+                        version: application.javaDependencies['gradle-node'],
+                        addToBuild: !application.skipClient,
+                    },
+                    {
+                        id: 'io.spring.nohttp',
+                        pluginName: 'nohttp',
+                        version: application.javaDependencies['no-http-checkstyle'],
+                        addToBuild: true,
+                    },
+                    {
+                        id: 'org.liquibase.gradle',
+                        pluginName: 'liquibase',
+                        version: application.javaDependencies['liquibase'],
+                        addToBuild: application.databaseType === 'sql',
+                    },
+                    {
+                        id: 'org.sonarqube',
+                        pluginName: 'sonarqube',
+                        version: application.javaDependencies['sonarqube'],
+                        addToBuild: true,
+                    },
+                    {
+                        id: 'com.github.andygoossens.gradle-modernizer-plugin',
+                        pluginName: 'modernizer',
+                        version: application.javaDependencies['modernizer'],
+                        addToBuild: true,
+                    },
+                ]);
+            },
             updatePackageJsonScripts({ application }) {
                 this.packageJson.merge({
                     scripts: {
