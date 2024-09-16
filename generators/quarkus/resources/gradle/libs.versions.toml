@@ -15,7 +15,7 @@ checkstyle = { module = "com.puppycrawl.tools:checkstyle", version = "10.3.4" }
 [plugins]
 gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version = "2.4.1" }
 gradle-node = { id = "com.github.node-gradle.node", version = "7.0.2" }
-liquibase = { id = "org.liquibase.gradle", version = "2.2.0" }
+liquibase = { id = "org.liquibase.gradle", version = "3.0.1" }
 sonarqube = { id = "org.sonarqube", version = "4.3.0.3225" }
 openapi-generator = { id = "org.openapi.generator", version = "4.2.3" }
 no-http-checkstyle = { id = "io.github.checkstyle.checkstyle", version = "0.0.11" }
